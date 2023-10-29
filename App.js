@@ -2,6 +2,28 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
 import { ImageBackground } from "react-native";
 
+const calculateWinner = (squares) => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+
+  return null;
+};
+
 export default function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [xIsNext, setXIsNext] = useState(true);
@@ -31,36 +53,10 @@ export default function App() {
     ? `Winner: ${winner}`
     : `Next player: ${xIsNext ? "X" : "O"}`;
 
-  const calculateWinner = (squares) => {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
-      if (
-        squares[a] &&
-        squares[a] === squares[b] &&
-        squares[a] === squares[c]
-      ) {
-        return squares[a];
-      }
-    }
-
-    return null;
-  };
-
   return (
     <ImageBackground
       style={styles.container}
-      // source={require("../assets/bg1.jpg")}
+      source={require("./assets/bg1.jpg")}
     >
       <Text style={styles.status}>{status}</Text>
       <View style={styles.board}>
